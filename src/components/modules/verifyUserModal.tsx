@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Modal,
   ModalContent,
@@ -13,9 +13,11 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { useCreateVerifyUserMutation } from "@src//redux/features/user/userManagement";
 
-export default function VerifyUserModal({ userId }) {
+export default function VerifyUserModal({ userId }: { userId: any }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [modalPlacement, setModalPlacement] = React.useState("auto");
+  const [modalPlacement, setModalPlacement] = useState<
+    "auto" | "top" | "bottom" | "top-center" | "bottom-center" | undefined
+  >("auto");
   const [createVerifyUser] = useCreateVerifyUserMutation();
 
   const {
@@ -25,7 +27,7 @@ export default function VerifyUserModal({ userId }) {
     reset,
   } = useForm();
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: any) => {
     const toastId = toast.loading("Registering...");
 
     const verifyData = { ...data, user: userId };
@@ -40,7 +42,7 @@ export default function VerifyUserModal({ userId }) {
         id: toastId,
         duration: 2000,
       });
-    } catch (err) {
+    } catch (err: any) {
       toast.error(err?.message || "An error occurred", {
         id: toastId,
         duration: 2000,
@@ -79,7 +81,6 @@ export default function VerifyUserModal({ userId }) {
                       label="Name"
                       type="text"
                       {...register("name", { required: "Name is required" })}
-                      errorMessage={errors.name?.message}
                     />
                   </div>
                   <div className="pb-4">
@@ -93,7 +94,6 @@ export default function VerifyUserModal({ userId }) {
                           message: "Invalid email address",
                         },
                       })}
-                      errorMessage={errors.email?.message}
                     />
                   </div>
                   <div className="pb-4">
@@ -101,7 +101,6 @@ export default function VerifyUserModal({ userId }) {
                       label="NID Number"
                       type="number"
                       {...register("nid", { required: "NID is required" })}
-                      errorMessage={errors.nid?.message}
                     />
                   </div>
                   <ModalFooter>

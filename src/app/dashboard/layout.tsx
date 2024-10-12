@@ -1,6 +1,4 @@
-"use client";
-
-import NavBar from "@src//components/navbar";
+import NavBar from "@src/components/navbar";
 import { ReactNode } from "react";
 
 export default function Layout({ children }: { children: ReactNode }) {

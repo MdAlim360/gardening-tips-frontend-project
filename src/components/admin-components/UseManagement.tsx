@@ -1,7 +1,7 @@
 import { useGetAllUsersQuery } from "@src//redux/features/user/userManagement";
 
 export function UserManagement() {
-  const { data: users, isLoading } = useGetAllUsersQuery("");
+  const { data: users, isLoading } = useGetAllUsersQuery(undefined);
 
   if (isLoading) {
     return <p>Loading users...</p>;

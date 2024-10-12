@@ -16,7 +16,12 @@ import { useCreateImageMutation } from "../redux/features/images/imageManagement
 
 export default function ImageModal() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [modalPlacement, setModalPlacement] = React.useState("auto");
+
+  // Set modalPlacement to be one of the valid placement types
+  const [modalPlacement, setModalPlacement] = React.useState<
+    "center" | "auto" | "top" | "top-center" | "bottom" | "bottom-center"
+  >("auto");
+
   const [createImage] = useCreateImageMutation();
 
   const {
@@ -26,7 +31,7 @@ export default function ImageModal() {
     reset,
   } = useForm();
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: any) => {
     const toastId = toast.loading("Creating...");
 
     const imageData = { ...data };
@@ -40,7 +45,7 @@ export default function ImageModal() {
         id: toastId,
         duration: 2000,
       });
-    } catch (err) {
+    } catch (err: any) {
       toast.error(err?.message || "An error occurred", {
         id: toastId,
         duration: 2000,

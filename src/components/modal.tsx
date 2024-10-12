@@ -14,9 +14,11 @@ import { toast } from "sonner";
 
 import { useUpdateUserMutation } from "../redux/features/user/userManagement";
 
-export default function EditModal({ userId }) {
+export default function EditModal({ userId }: { userId: any }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [modalPlacement, setModalPlacement] = React.useState("auto");
+  const [modalPlacement, setModalPlacement] = React.useState<
+    "center" | "top" | "top-center" | "bottom" | "bottom-center"
+  >("center");
   const [updateUser] = useUpdateUserMutation();
 
   const {
@@ -26,12 +28,11 @@ export default function EditModal({ userId }) {
     reset,
   } = useForm();
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: { [key: string]: any }) => {
     const updatedData = Object.keys(data)
       .filter((key) => data[key])
-      .reduce((obj, key) => {
+      .reduce((obj: { [key: string]: any }, key) => {
         obj[key] = data[key];
-
         return obj;
       }, {});
 
@@ -48,7 +49,7 @@ export default function EditModal({ userId }) {
       toast.error("Failed to update user.");
     }
 
-    onOpenChange(false);
+    onOpenChange();
     reset();
   };
 
@@ -108,7 +109,7 @@ export default function EditModal({ userId }) {
                 <Button
                   color="primary"
                   type="submit"
-                  onPress={handleSubmit(onSubmit)}
+                  onPress={() => handleSubmit(onSubmit)()}
                 >
                   Edit
                 </Button>

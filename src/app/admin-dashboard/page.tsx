@@ -1,8 +1,9 @@
 "use client";
-import { DashboardAnalytics } from "./components/DashboardAnalytics";
-import { PaymentHistory } from "./components/PaymentHistory";
-import { PostManagement } from "./components/PostManagement";
-import { UserManagement } from "./components/UseManagement";
+
+import { DashboardAnalytics } from "../../components/admin-components/DashboardAnalytics";
+import { PaymentHistory } from "../../components/admin-components/PaymentHistory";
+import { PostManagement } from "../../components/admin-components/PostManagement";
+import { UserManagement } from "../../components/admin-components/UseManagement";
 
 function AdminDashboard() {
   return (

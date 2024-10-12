@@ -12,7 +12,13 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { useNewPasswordMutation } from "@src//redux/features/user/userManagement";
 
-export default function UpdatePasswordModal({ isOpen, onClose }) {
+export default function UpdatePasswordModal({
+  isOpen,
+  onClose,
+}: {
+  isOpen: any;
+  onClose: any;
+}) {
   const [newPassword] = useNewPasswordMutation();
   //   const currentUser = useAppSelector((state) => state.auth.user);
 
@@ -23,21 +29,21 @@ export default function UpdatePasswordModal({ isOpen, onClose }) {
     reset,
   } = useForm();
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: any) => {
     // const toastId = toast.loading("Updating password...");
     const verifiedCode = Number(data.verifiedCode);
-    const updatePasswordData = {
+    const updatePasswordData: any = {
       verifiedCode: verifiedCode,
       newPassword: data.newPassword,
     };
 
     try {
       console.log(updatePasswordData);
-      const res = await newPassword(updatePasswordData).unwrap();
+      const res: any = await newPassword(updatePasswordData).unwrap();
 
       console.log(res);
       // Check if the status indicates a failure
-      if (res.data.status === "password update failed") {
+      if (res?.data?.status === "password update failed") {
         // Show an error message and keep the modal open for retry
         toast.error("Invalid verification code");
       } else {
@@ -46,7 +52,7 @@ export default function UpdatePasswordModal({ isOpen, onClose }) {
         reset();
         onClose(); // Close modal on successful password update
       }
-    } catch (err) {
+    } catch (err: any) {
       // Handle API call failure
       //   toast.error(err?.message || "An error occurred", {
       //     id: toastId,
@@ -76,7 +82,6 @@ export default function UpdatePasswordModal({ isOpen, onClose }) {
                 {...register("verifiedCode", {
                   required: "Verification code is required",
                 })}
-                errorMessage={errors.verificationCode?.message}
               />
             </div>
             <div className="pb-4">
@@ -86,7 +91,6 @@ export default function UpdatePasswordModal({ isOpen, onClose }) {
                 {...register("newPassword", {
                   required: "New password is required",
                 })}
-                errorMessage={errors.newPassword?.message}
               />
             </div>
 

@@ -11,17 +11,18 @@ interface Post {
   content: string;
   tag: string;
   isDeleted: boolean;
-  following: string[];
-  followers: string[];
-  comments: string[];
-  upvote: string[];
-  downvote: string[];
-  category: string;
+  following: any;
+  followers: any;
+  comments: any;
+  upvote: any;
+  downvote: any;
+  category: any;
   post: string;
-
   picture: string;
   user: string;
-  favorite: string[];
+  favorite: any;
+  updatedAt: string;
+  createdAt: string;
 }
 
 function PremiumPage() {
@@ -31,24 +32,36 @@ function PremiumPage() {
     return <div>Loading...</div>;
   }
 
+  // Check if posts is defined and has results
+  const premiumPosts = posts?.data?.result.filter(
+    (post: Post) => !post.isDeleted && post.tag === "Premium"
+  );
+
   return (
-    <div className=" mt-32 md:mt-40 max-w-7xl px-6 md:px-12 lg:px-20 mx-auto">
+    <div className="mt-32 md:mt-40 max-w-7xl px-6 md:px-12 lg:px-20 mx-auto">
       <h1 className="text-lg md:text-xl lg:text-2xl text-center font-medium py-4">
         All Premium Posts
       </h1>
-      {posts?.data?.result.length > 0 ? (
+      {premiumPosts && premiumPosts.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-1 gap-6">
-          {posts.data.result
-            .filter((post: Post) => !post.isDeleted && post.tag === "Premium")
-            .map((post: Post) => (
-              // eslint-disable-next-line prettier/prettier
-              <PostCard
-                key={post._id}
-                createdAt={""}
-                updatedAt={""}
-                {...post}
-              />
-            ))}
+          {premiumPosts.map((post: Post) => (
+            <PostCard
+              key={post._id}
+              _id={post._id}
+              category={post.category}
+              comments={post.comments}
+              createdAt={post.createdAt}
+              downvote={post.downvote}
+              favorite={post.favorite || []} // Ensure favorite is an array
+              isDeleted={post.isDeleted}
+              picture={post.picture}
+              post={post.post}
+              tag={post.tag}
+              updatedAt={post.updatedAt || ""} // Ensure updatedAt is a string
+              upvote={post.upvote}
+              user={""}
+            />
+          ))}
         </div>
       ) : (
         <div>No posts available</div>

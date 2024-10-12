@@ -30,13 +30,13 @@ export default function RecoveryPasswordModal() {
     reset,
   } = useForm();
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: any) => {
     const toastId = toast.loading("Check your email for verification code...");
 
     const verifyEmail = { ...data };
 
     try {
-      const res = await recoveryPassword(verifyEmail).unwrap();
+      const res: any = await recoveryPassword(verifyEmail).unwrap();
 
       toast.success("Check your email for the verification code", {
         id: toastId,
@@ -46,7 +46,7 @@ export default function RecoveryPasswordModal() {
       // Automatically open UpdatePasswordModal after successful recovery
       setUpdatePasswordModalOpen(true);
       onOpenChange(); // Close the recovery modal
-    } catch (err) {
+    } catch (err: any) {
       toast.error(err?.message || "An error occurred", {
         id: toastId,
         duration: 2000,
@@ -90,7 +90,6 @@ export default function RecoveryPasswordModal() {
                           message: "Invalid email address",
                         },
                       })}
-                      errorMessage={errors.email?.message}
                     />
                   </div>
 

@@ -12,43 +12,43 @@ import {
 import { useForm } from "react-hook-form";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // Import Quill styles
-import { useUpdatePostMutation } from "@src//redux/features/post/postManagement";
 import { toast } from "sonner";
+import { useUpdatePostMutation } from "@src//redux/features/post/postManagement";
 
-export default function EditPostModal({ postId }) {
+// Define the acceptable values for modal placement
+type ModalPlacement =
+  | "auto"
+  | "center"
+  | "top"
+  | "top-center"
+  | "bottom"
+  | "bottom-center"
+  | undefined;
+
+export default function EditPostModal({ postId }: { postId: any }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const { register, handleSubmit, reset } = useForm();
-  const [modalPlacement, setModalPlacement] = useState("auto");
-  const [postContent, setPostContent] = useState(""); // Stores plain text
-  const [images, setImages] = useState<string[]>([]); // Explicitly typed as string array
-  const [categories, setCategories] = useState<string[]>([]); // Explicitly typed as string array
+  const [modalPlacement, setModalPlacement] = useState<ModalPlacement>("auto"); // Ensure initial value is valid
+  const [postContent, setPostContent] = useState("");
+  const [images, setImages] = useState<string[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
   const [isPremium, setIsPremium] = useState(false);
 
-  // Utility function to strip HTML tags
-  const stripHtml = (html: string) => {
-    const doc = new DOMParser().parseFromString(html, "text/html");
-
-    return doc.body.textContent || "";
-  };
-
-  const [updatePost, { data }] = useUpdatePostMutation();
+  const [updatePost] = useUpdatePostMutation();
 
   const onSubmit = async (data: any) => {
     const toastId = toast.loading("Editing...");
     const postData = {
-      post: postContent, // Now stores plain text
-      picture: images[0], // Assuming the first image as the main one
+      post: postContent,
+      picture: images[0],
       tag: isPremium ? "Premium" : "Basic",
-      category: categories.join(", "), // Join categories as a string
+      category: categories.join(", "),
     };
 
     try {
-      await updatePost({
-        id: postId,
-        payload: { ...postData }, // Update upvotes first
-      }).unwrap();
+      await updatePost({ id: postId, payload: postData }).unwrap();
       toast.success("Successfully edited the post!");
-      onOpenChange(false); // Close the modal after successful edit
+      onOpenChange(); // Close the modal after successful edit
       reset(); // Reset the form fields
     } catch (error) {
       toast.error("Failed to edit the post.");
@@ -58,7 +58,7 @@ export default function EditPostModal({ postId }) {
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setImages([...images, e.target.value]); // Add the image link to the images array
+    setImages([...images, e.target.value]);
   };
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,7 +67,7 @@ export default function EditPostModal({ postId }) {
     setCategories((prevCategories) =>
       prevCategories.includes(value)
         ? prevCategories.filter((category) => category !== value)
-        : [...prevCategories, value],
+        : [...prevCategories, value]
     );
   };
 
@@ -80,7 +80,7 @@ export default function EditPostModal({ postId }) {
       <Modal
         className="modal-container"
         isOpen={isOpen}
-        placement={modalPlacement}
+        placement={modalPlacement} // Make sure this is a valid placement
         onOpenChange={onOpenChange}
       >
         <ModalContent>
@@ -90,15 +90,13 @@ export default function EditPostModal({ postId }) {
                 Edit Post
               </ModalHeader>
               <ModalBody>
-                {/* Rich Text Editor */}
                 <ReactQuill
                   className="mb-4 bg-white"
                   placeholder="Write your content here..."
                   theme="snow"
-                  onChange={(content) => setPostContent(stripHtml(content))} // Strips HTML
+                  onChange={(content) => setPostContent(content)} // Use raw content
                 />
 
-                {/* Image Upload Section */}
                 <h3 className="text-lg font-bold mb-2">Attach Images</h3>
                 <Input
                   {...register("photoLink")}
@@ -107,7 +105,6 @@ export default function EditPostModal({ postId }) {
                   onChange={handleImageChange}
                 />
 
-                {/* Category Selection */}
                 <h3 className="text-lg font-bold mb-2">Select Categories</h3>
                 <div className="flex gap-4 mb-4">
                   <label className="flex items-center gap-2">
@@ -136,7 +133,6 @@ export default function EditPostModal({ postId }) {
                   </label>
                 </div>
 
-                {/* Premium Tag */}
                 <div className="mb-4">
                   <label className="flex items-center gap-2">
                     <input
@@ -153,7 +149,7 @@ export default function EditPostModal({ postId }) {
                   color="danger"
                   variant="light"
                   onPress={() => {
-                    onOpenChange(false); // Close the modal
+                    onOpenChange();
                     reset(); // Reset form fields
                   }}
                 >
@@ -161,8 +157,8 @@ export default function EditPostModal({ postId }) {
                 </Button>
                 <Button
                   color="primary"
-                  type="submit"
-                  onPress={handleSubmit(onSubmit)}
+                  type="button" // Ensure button type is set
+                  onPress={() => handleSubmit(onSubmit)()} // Wrap in an arrow function
                 >
                   Edit Post
                 </Button>

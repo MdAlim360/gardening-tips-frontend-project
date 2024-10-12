@@ -21,12 +21,12 @@ import { logout } from "../redux/features/auth/authSlice";
 import { SearchIcon } from "./icons";
 
 function NavBar() {
+  const modalRef = useRef<HTMLDivElement | null>(null);
   const user: any = useAppSelector((state) => state.auth.user);
 
   const [activeLink, setActiveLink] = useState("home");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const modalRef = useRef(null);
 
   const dispatch = useAppDispatch();
 

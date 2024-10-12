@@ -1,18 +1,29 @@
 "use client";
+
 import PostCard from "@src//components/modules/post/PostCard";
 import { useGetSinglePostQuery } from "@src//redux/features/post/postManagement";
 import { useGetSingleUserQuery } from "@src//redux/features/user/userManagement";
 import React, { useEffect, useState } from "react";
 
-function SinglePost({ params }) {
+interface Params {
+  params: {
+    postId: string;
+  };
+}
+
+function SinglePost({ params }: Params) {
   const { postId } = params;
   const { data: post, isLoading: postLoading } = useGetSinglePostQuery(postId);
   const [postUserName, setPostUserName] = useState<string | null>(null);
 
   // Fetch post user
-  const userId = post?.data?.user;
-  const { data: postUser, isLoading: userLoading } =
-    useGetSingleUserQuery(userId);
+  const userId = post?.data?.user ?? null; // Handle undefined user
+  const { data: postUser, isLoading: userLoading } = useGetSingleUserQuery(
+    userId,
+    {
+      skip: !userId, // Skip query if userId is null
+    }
+  );
 
   useEffect(() => {
     if (postUser) {
@@ -39,14 +50,14 @@ function SinglePost({ params }) {
         comments={postData.comments}
         createdAt={postData.createdAt}
         downvote={postData.downvote}
-        favorite={[]}
+        favorite={postData.favorite || []} // Ensure favorite is an array
         isDeleted={postData.isDeleted}
         picture={postData.picture}
         post={postData.post}
         tag={postData.tag}
-        updatedAt={""}
+        updatedAt={postData.updatedAt || ""} // Ensure updatedAt is a string
         upvote={postData.upvote}
-        user={postUserName || "Unknown User"}
+        user={postUserName || "Unknown User"} // Fallback if no user
       />
     </div>
   );

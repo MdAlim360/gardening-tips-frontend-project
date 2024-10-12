@@ -1,7 +1,7 @@
 import { useGetAllUsersQuery } from "@src//redux/features/user/userManagement";
 
 export function PaymentHistory() {
-  const { data: payments, isLoading } = useGetAllUsersQuery("");
+  const { data: payments, isLoading } = useGetAllUsersQuery(undefined);
 
   if (isLoading) {
     return <p>Loading payment history...</p>;
@@ -21,7 +21,7 @@ export function PaymentHistory() {
         </thead>
         <tbody>
           {payments?.data.map((payment) => (
-            <tr key={payment.id}>
+            <tr key={payment._id}>
               <td className="py-2 px-4 border">{payment._id}</td>
               <td className="py-2 px-4 border">$100</td>
               <td className="py-2 px-4 border">

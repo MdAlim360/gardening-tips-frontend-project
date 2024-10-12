@@ -54,7 +54,7 @@ export default function RegisterPage() {
     };
 
     try {
-      const res = await signup(payload).unwrap();
+      const res: any = await signup(payload).unwrap();
 
       console.log(res);
       if (!res.data) {

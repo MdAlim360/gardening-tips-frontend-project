@@ -10,7 +10,7 @@ import EditModal from "@src//components/modal";
 import PostModal from "@src//components/modules/postModal";
 import PostCard from "@src//components/modules/post/PostCard";
 
-function ProfilePage({ params }) {
+function ProfilePage({ params }: { params: any }) {
   const { username } = params;
   const { data: user, isLoading: isUserLoading } =
     useGetSingleUserQuery(username);
@@ -20,8 +20,8 @@ function ProfilePage({ params }) {
   // Calculate total upvotes across all posts
   const totalUpvotes =
     posts?.data
-      ?.filter((post) => !post.isDeleted)
-      .reduce((acc, post) => acc + post.upvote.length, 0) || 0;
+      ?.filter((post: any) => !post.isDeleted)
+      .reduce((acc: any, post: any) => acc + post.upvote.length, 0) || 0;
 
   // Check if the user is verified
   const isUserVerified = user?.data?.status === "verified";
@@ -113,8 +113,8 @@ function ProfilePage({ params }) {
       <div className="w-full max-w-3xl mt-6 p-4 bg-white rounded-lg shadow-md">
         <h2 className="text-xl font-bold mb-4">Posts</h2>
         {posts?.data
-          ?.filter((post) => !post.isDeleted) // Exclude posts with isDeleted true
-          .map((post) => <PostCard key={post._id} {...post} />)}
+          ?.filter((post: any) => !post.isDeleted) // Exclude posts with isDeleted true
+          .map((post: any) => <PostCard key={post._id} {...post} />)}
       </div>
     </div>
   );

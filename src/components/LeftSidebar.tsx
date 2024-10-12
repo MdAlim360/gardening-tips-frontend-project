@@ -10,7 +10,7 @@ import {
 } from "react-icons/fa";
 import { IoSaveSharp } from "react-icons/io5";
 
-export default function RightSidebar() {
+export default function LeftSidebar() {
   return (
     <div className="w-64 h-full p-4">
       <ul className="space-y-4">

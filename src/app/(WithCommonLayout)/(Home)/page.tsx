@@ -1,42 +1,67 @@
 "use client";
 
-import PostCard from "@src//components/modules/post/PostCard";
-import { useGetAllPostQuery } from "@src//redux/features/post/postManagement";
-import { useGetSingleUserQuery } from "@src//redux/features/user/userManagement";
-import { useAppSelector } from "@src//redux/hooks";
+import PostCard from "@src/components/modules/post/PostCard";
+import { useGetAllPostQuery } from "@src/redux/features/post/postManagement";
+import { useGetSingleUserQuery } from "@src/redux/features/user/userManagement";
+import { useAppSelector } from "@src/redux/hooks";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
-const HomePage = () => {
-  const { data: posts, isLoading } = useGetAllPostQuery(undefined);
-  const currentUser: any = useAppSelector((state) => state.auth.user);
-  const { data: user } = useGetSingleUserQuery(currentUser.id);
+// Define types for Post and User (modify according to your API response)
+// interface Post {
+//   _id: string;
+//   post: string;
+//   isDeleted: boolean;
+//   category: string;
+//   upvotes: number;
+//   tag: string;
+// }
 
+// interface User {
+//   id: string;
+//   status: "verified" | "unverified";
+// }
+
+export default function HomePage() {
+  // const { isFallback } = useRouter();
+
+  // if (isFallback) {
+  //   return <h1>Fallback</h1>;
+  // }
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const { data: posts, isLoading } = useGetAllPostQuery(undefined);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const currentUser: any = useAppSelector((state) => state.auth.user);
+  const { data: user } = useGetSingleUserQuery(currentUser?.id);
+  console.log(user);
   // State for search and filter
   const [searchTerm, setSearchTerm] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("");
 
   // Function to handle search and filtering
   const filteredPosts = () => {
-    if (!posts?.data?.result) return [];
+    // Ensure posts and posts.data.result exist
+    if (!posts?.data?.result || posts?.data?.result.length === 0) {
+      return []; // Return an empty array if no data is available
+    }
 
-    return posts.data.result
-      .filter((post) => !post.isDeleted) // Exclude posts with isDeleted true
-      .filter(
-        (post) =>
-          post.post &&
-          post.post.toLowerCase().includes(searchTerm.toLowerCase()), // Check if title is defined
-      )
-      .filter((post) =>
-        categoryFilter ? post.category === categoryFilter : true,
-      )
-      .sort((a, b) => b.upvotes - a.upvotes); // Sort by highest upvotes
+    // Filter posts based on criteria
+    return posts?.data?.result
+      .filter((post: any) => !post.isDeleted) // Exclude posts with isDeleted true
+      .filter((post: any) =>
+        post.post.toLowerCase().includes(searchTerm.toLowerCase())
+      ) // Check if post content is defined and matches search term
+      .filter((post: any) =>
+        categoryFilter ? post.category === categoryFilter : true
+      ) // Filter by category if a filter is applied
+      .sort((a: any, b: any) => b.upvotes - a.upvotes); // Sort by highest upvotes
   };
 
-  const handleSearchChange = (e) => {
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
 
-  const handleCategoryChange = (e) => {
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCategoryFilter(e.target.value);
   };
 
@@ -60,15 +85,13 @@ const HomePage = () => {
         onChange={handleCategoryChange}
       >
         <option value="">All Categories</option>
-        {/* Add other categories as options here */}
         <option value="Flowers">Flowers</option>
         <option value="Landscaping">Landscaping</option>
         <option value="Vegetables">Vegetables</option>
-        {/* Add more categories as needed */}
       </select>
 
       {!isLoading && filteredPosts().length > 0 ? (
-        filteredPosts().map((post) => {
+        filteredPosts().map((post: any) => {
           const isPremium = post.tag === "Premium";
           const isUnverified = user?.data?.status === "unverified";
 
@@ -95,6 +118,4 @@ const HomePage = () => {
       )}
     </div>
   );
-};
-
-export default HomePage;
+}

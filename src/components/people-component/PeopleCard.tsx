@@ -10,8 +10,8 @@ interface User {
   _id: string;
   name: string;
   picture: string;
-  followers: string[]; // Assuming followers are user IDs
-  following: string[]; // Assuming following are user IDs
+  followers: any[]; // Assuming followers are user IDs
+  following: any[]; // Assuming following are user IDs
 }
 
 interface PeopleCardProps {
@@ -75,7 +75,7 @@ function PeopleCard({ user }: PeopleCardProps) {
         id: currentUser?.id,
         payload: {
           following: currentUser?.following.filter(
-            (id: string) => id !== user._id,
+            (id: string) => id !== user._id
           ), // Remove the followed user's ID
         },
       }).unwrap();
@@ -84,8 +84,8 @@ function PeopleCard({ user }: PeopleCardProps) {
       await updateUser({
         id: user._id,
         payload: {
-          followers: user.followers.filter(
-            (id: string) => id !== currentUser?.id,
+          followers: user?.followers?.filter(
+            (id: string) => id !== currentUser?.id
           ), // Remove the current user's ID
         },
       }).unwrap();
@@ -93,7 +93,7 @@ function PeopleCard({ user }: PeopleCardProps) {
       // Update the state to reflect that the user is no longer following
       setIsFollowing(false);
       setIsAlreadyFollowed(false); // Update followers state
-      toast.success(`Successfully unfollowed ${user.name}!`);
+      toast.success(`Successfully unfollowed ${user?.name}!`);
     } catch (error) {
       console.error("Error unfollowing user:", error);
       toast.error("Failed to unfollow user.");
@@ -103,13 +103,13 @@ function PeopleCard({ user }: PeopleCardProps) {
   return (
     <div className="max-w-sm rounded overflow-hidden shadow-lg bg-white">
       <img
-        alt={`${user.name}'s profile`}
+        alt={`${user?.name}'s profile`}
         className="w-full h-40 mx-auto object-cover"
-        src={user.picture}
+        src={user?.picture}
       />
 
       <div className="mt-12 pb-4 px-2 flex justify-between items-center">
-        <button className="text-black hover:underline">{user.name}</button>
+        <button className="text-black hover:underline">{user?.name}</button>
         <button
           className={`${
             isFollowing || isAlreadyFollowed

@@ -45,7 +45,7 @@ export default function Login() {
     const toastId = toast.loading("Logging in");
 
     try {
-      const res = await login(data).unwrap();
+      const res: any = await login(data).unwrap();
 
       if (!res.data || !res.token) {
         throw new Error("Login failed: No token received");

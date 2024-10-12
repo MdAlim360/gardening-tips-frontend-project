@@ -24,7 +24,7 @@ export default function ChangePasswordModal() {
     reset,
   } = useForm();
 
-  const onSubmit = async (data, onClose) => {
+  const onSubmit = async (data: any, onClose: any) => {
     const updatePasswordData = {
       ...data,
     };
@@ -35,7 +35,7 @@ export default function ChangePasswordModal() {
       toast.success("Password changed successfully");
       reset();
       onClose(); // Close modal on successful password update
-    } catch (err) {
+    } catch (err: any) {
       // Extracting the error message
       const errorMessage =
         err?.data?.message || err?.error || "An error occurred";
@@ -77,7 +77,6 @@ export default function ChangePasswordModal() {
                       {...register("email", {
                         required: "Email is required",
                       })}
-                      errorMessage={errors.email?.message}
                     />
                   </div>
                   <div className="pb-4">
@@ -87,7 +86,6 @@ export default function ChangePasswordModal() {
                       {...register("oldPassword", {
                         required: "Old password is required",
                       })}
-                      errorMessage={errors.oldPassword?.message}
                     />
                   </div>
                   <div className="pb-4">
@@ -97,7 +95,6 @@ export default function ChangePasswordModal() {
                       {...register("newPassword", {
                         required: "New password is required",
                       })}
-                      errorMessage={errors.newPassword?.message}
                     />
                   </div>
 

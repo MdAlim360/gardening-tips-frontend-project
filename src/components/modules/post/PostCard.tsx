@@ -80,9 +80,17 @@ const PostCard: React.FC<Post> = ({
         jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
       };
 
-      html2pdf().set(opt).from(element).save();
+      // Pass the element as an argument to html2pdf
+      html2pdf(element, opt)
+        .then(() => {
+          console.log("PDF downloaded successfully");
+        })
+        .catch((error) => {
+          console.error("Error downloading PDF:", error);
+        });
     }
   };
+
   const [isExpanded, setIsExpanded] = useState(false);
   const [postUserName, setPostUserName] = useState<string | null>(null);
   const [timeAgo, setTimeAgo] = useState("");
@@ -95,7 +103,7 @@ const PostCard: React.FC<Post> = ({
   const [commentId, setCommentId] = useState("");
   const { register, handleSubmit, reset } = useForm<CommentFormInputs>();
   const [updatePost] = useUpdatePostMutation();
-  const [deletePost] = useDeletePostMutation(_id);
+  const [deletePost] = useDeletePostMutation();
   const currentUser: any = useAppSelector((state) => state.auth.user);
 
   // Fetch post user
@@ -111,7 +119,7 @@ const PostCard: React.FC<Post> = ({
   // Time ago calculation
   const calculateTimeAgo = (date: string) => {
     const seconds = Math.floor(
-      (new Date().getTime() - new Date(date).getTime()) / 1000,
+      (new Date().getTime() - new Date(date).getTime()) / 1000
     );
     const minutes = Math.floor(seconds / 60);
     const hours = Math.floor(minutes / 60);
@@ -138,10 +146,10 @@ const PostCard: React.FC<Post> = ({
 
     // Check if the user has already upvoted
     const existingUpvoteIndex = upvote.findIndex(
-      (vote) => vote.userId === userId,
+      (vote: any) => vote.userId === userId
     );
     const existingDownvoteIndex = downvote.findIndex(
-      (vote) => vote?.userId === userId,
+      (vote: any) => vote?.userId === userId
     );
 
     try {
@@ -180,10 +188,10 @@ const PostCard: React.FC<Post> = ({
 
     // Check if the user has already downvoted
     const existingDownvoteIndex = downvote.findIndex(
-      (vote) => vote?.userId === userId,
+      (vote: any) => vote?.userId === userId
     );
     const existingUpvoteIndex = upvote.findIndex(
-      (vote) => vote?.userId === userId,
+      (vote: any) => vote?.userId === userId
     );
 
     try {
@@ -217,7 +225,7 @@ const PostCard: React.FC<Post> = ({
     }
   };
 
-  const handleDeletePost = async (postId) => {
+  const handleDeletePost = async (postId: any) => {
     try {
       await deletePost(postId);
       toast.success(`Successfully post deleted!`);
@@ -282,7 +290,7 @@ const PostCard: React.FC<Post> = ({
     }
   };
 
-  const handleComment = (data) => {
+  const handleComment = (data: any) => {
     // console.log(data);
     setCommentId(data);
   };
@@ -349,14 +357,14 @@ const PostCard: React.FC<Post> = ({
           </div>
           <span
             className={`absolute left-[80px] top-[42px] md:left-44 md:top-1/2 transform -translate-y-1/2 text-xs md:text-sm font-semibold px-1 md:px-3 py-1 rounded-full z-0 ${getBadgeStyles(
-              category,
+              category
             )}`}
           >
             {category}
           </span>
           <span
             className={`absolute left-[180px] md:left-[490px] lg:left-[550px] top-[42px] md:top-4 transform -translate-y-1/2 text-xs md:text-sm font-semibold rounded-full z-0 ${getTagStyles(
-              tag,
+              tag
             )}`}
           >
             {tag}

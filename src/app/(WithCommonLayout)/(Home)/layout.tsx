@@ -1,43 +1,41 @@
-"use client";
-
-import LeftSidebar from "@src//components/LeftSidebar";
-import NavBar from "@src//components/navbar";
-import RightSidebar from "@src//components/RightSidebar";
-import { useEffect, useState, ReactNode } from "react";
+import LeftSidebar from "@src/components/LeftSidebar";
+import RightSidebar from "@src/components/LeftSidebar";
+import NavBar from "@src/components/navbar";
+import { ReactNode } from "react";
 
 export default function Layout({ children }: { children: ReactNode }) {
-  const [items, setItems] = useState(Array.from({ length: 20 }, (_, i) => i)); // Initial items
-  const [loading, setLoading] = useState(false);
+  // const [items, setItems] = useState(Array.from({ length: 20 }, (_, i) => i)); // Initial items
+  // const [loading, setLoading] = useState(false);
 
   // Function to load more items (simulating an API call)
-  const loadMoreItems = () => {
-    setLoading(true);
-    setTimeout(() => {
-      setItems((prev) => [
-        ...prev,
-        ...Array.from({ length: 20 }, (_, i) => prev.length + i),
-      ]);
-      setLoading(false);
-    }, 1000); // Simulate network delay
-  };
+  // const loadMoreItems = () => {
+  //   setLoading(true);
+  //   setTimeout(() => {
+  //     setItems((prev) => [
+  //       ...prev,
+  //       ...Array.from({ length: 20 }, (_, i) => prev.length + i),
+  //     ]);
+  //     setLoading(false);
+  //   }, 1000); // Simulate network delay
+  // };
 
-  // Infinite scroll handler
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollHeight = document.documentElement.scrollHeight;
-      const scrollTop = document.documentElement.scrollTop;
-      const clientHeight = document.documentElement.clientHeight;
+  // // Infinite scroll handler
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     const scrollHeight = document.documentElement.scrollHeight;
+  //     const scrollTop = document.documentElement.scrollTop;
+  //     const clientHeight = document.documentElement.clientHeight;
 
-      // Check if user has reached the bottom of the page
-      if (scrollTop + clientHeight >= scrollHeight - 10 && !loading) {
-        loadMoreItems();
-      }
-    };
+  //     // Check if user has reached the bottom of the page
+  //     if (scrollTop + clientHeight >= scrollHeight - 10 && !loading) {
+  //       loadMoreItems();
+  //     }
+  //   };
 
-    window.addEventListener("scroll", handleScroll);
+  //   window.addEventListener("scroll", handleScroll);
 
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [loading]);
+  //   return () => window.removeEventListener("scroll", handleScroll);
+  // }, [loading]);
 
   return (
     <>
@@ -57,18 +55,6 @@ export default function Layout({ children }: { children: ReactNode }) {
         <div className="bg-gray-200 w-full max-w-3xl mx-4 md:mx-6 lg:mx-8 overflow-auto scrollable-content mt-16">
           {children}
           {/* Content Feed - Simulating posts/items */}
-          <div className="space-y-4">
-            {items.map((item, index) => (
-              <div
-                key={index}
-                className="bg-white rounded-lg p-6 shadow-sm border"
-              >
-                Item {item}
-              </div>
-            ))}
-          </div>
-          {/* Loading more feedback */}
-          {loading && <div className="text-center p-4">Loading more...</div>}
         </div>
 
         {/* Right Sidebar - Independent scroll and hidden scrollbar */}

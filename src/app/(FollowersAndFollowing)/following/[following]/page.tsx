@@ -2,14 +2,14 @@
 
 import { useGetSingleUserQuery } from "@src//redux/features/user/userManagement";
 
-import PeopleCard from "../../../people/component/PeopleCard";
+import PeopleCard from "../../../../components/people-component/PeopleCard";
 
 function FollowerCard({ followingId }: { followingId: string }) {
   const { data: followingData, isLoading } = useGetSingleUserQuery(
     followingId,
     {
       skip: !followingId,
-    },
+    }
   );
 
   if (isLoading) {

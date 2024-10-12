@@ -4,7 +4,7 @@ import { useAppSelector } from "@src//redux/hooks";
 import Link from "next/link";
 
 function ProfilePage() {
-  const user: any = useAppSelector((state) => state.auth.user);
+  const user: any = useAppSelector((state: any) => state.auth.user);
 
   return (
     <div className="pt-16 flex  flex-col items-center max-w-6xl mx-auto bg-gray-100">
