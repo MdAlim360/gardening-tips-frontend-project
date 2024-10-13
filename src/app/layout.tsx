@@ -7,6 +7,7 @@ import { fontSans } from "../config/fonts";
 import ReduxProvider from "../redux/ReduxProvider";
 
 import { Providers } from "./providers";
+import { store } from "@src/redux/store";
 
 export const metadata: Metadata = {
   title: {
@@ -37,10 +38,10 @@ export default function RootLayout({
       <body
         className={clsx(
           "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable,
+          fontSans.variable
         )}
       >
-        <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
+        <Providers>
           <ReduxProvider>{children}</ReduxProvider>
         </Providers>
       </body>

@@ -18,7 +18,7 @@ export default function LeftSidebar() {
         <li>
           <Link
             className="flex items-center space-x-4 hover:bg-gray-100 p-2 rounded-lg"
-            href="#"
+            href="/"
           >
             <FaHome className="text-green-500" />
             <span className="text-gray-700">Home</span>
@@ -29,10 +29,10 @@ export default function LeftSidebar() {
         <li>
           <Link
             className="flex items-center space-x-4 hover:bg-gray-100 p-2 rounded-lg"
-            href="#"
+            href="/people"
           >
             <FaUsers className="text-green-500" />
-            <span className="text-gray-700">Friends</span>
+            <span className="text-gray-700">People</span>
           </Link>
         </li>
 
@@ -40,7 +40,7 @@ export default function LeftSidebar() {
         <li>
           <Link
             className="flex items-center space-x-4 hover:bg-gray-100 p-2 rounded-lg"
-            href="#"
+            href="/post/favorite"
           >
             <IoSaveSharp className="text-green-500" />
             <span className="text-gray-700">Saved</span>
@@ -51,7 +51,7 @@ export default function LeftSidebar() {
         <li>
           <Link
             className="flex items-center space-x-4 hover:bg-gray-100 p-2 rounded-lg"
-            href="#"
+            href="/"
           >
             <FaNewspaper className="text-green-500" />
             <span className="text-gray-700">Most Recent</span>
@@ -62,7 +62,7 @@ export default function LeftSidebar() {
         <li>
           <Link
             className="flex items-center space-x-4 hover:bg-gray-100 p-2 rounded-lg"
-            href="#"
+            href="/gallery"
           >
             <FaImages className="text-green-500" />
             <span className="text-gray-700">Photos</span>
@@ -73,7 +73,7 @@ export default function LeftSidebar() {
         <li>
           <Link
             className="flex items-center space-x-4 hover:bg-gray-100 p-2 rounded-lg"
-            href="#"
+            href="/premium"
           >
             <FaStar className="text-green-500" />
             <span className="text-gray-700">Premium</span>

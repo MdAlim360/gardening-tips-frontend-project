@@ -28,11 +28,10 @@ interface Post {
 
 function PremiumPage() {
   const { data: posts, isLoading } = useGetAllPostQuery(undefined);
-
   if (isLoading) {
     return <div>Loading...</div>;
   }
-
+  console.log(posts);
   // Check if posts is defined and has results
   const premiumPosts = posts?.data?.result.filter(
     (post: Post) => !post.isDeleted && post.tag === "Premium"
@@ -60,7 +59,7 @@ function PremiumPage() {
               tag={post.tag}
               updatedAt={post.updatedAt || ""} // Ensure updatedAt is a string
               upvote={post.upvote}
-              user={""}
+              user={post?.user}
             />
           ))}
         </div>

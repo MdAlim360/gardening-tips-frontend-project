@@ -132,7 +132,7 @@ function NavBar() {
       {/* Center: Icons with Hover Text Below */}
       <div className="-ml-48 flex gap-12 items-center">
         <Link
-          className={`relative pl-0 md:pl-20 lg:pl-0 hidden md:flex items-center justify-center group ${activeLink === "home" ? "text-green-500" : "text-black"} transition-colors duration-200`}
+          className={`relative pl-0 md:pl-44 lg:pl-0 hidden md:flex items-center justify-center group ${activeLink === "home" ? "text-green-500" : "text-black"} transition-colors duration-200`}
           href="/"
           onClick={() => handleLinkClick("home")}
         >
