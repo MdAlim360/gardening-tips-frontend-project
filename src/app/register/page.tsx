@@ -52,7 +52,7 @@ export default function RegisterPage() {
       isBlocked: false,
       isDeleted: false,
     };
-
+    console.log(payload);
     try {
       const res: any = await signup(payload).unwrap();
 
