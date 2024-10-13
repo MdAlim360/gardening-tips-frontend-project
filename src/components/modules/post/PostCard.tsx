@@ -67,7 +67,7 @@ const PostCard: React.FC<Post> = ({
   _id,
 }) => {
   const postRef = useRef<HTMLDivElement>(null); // Reference to the post content
-
+  console.log(picture);
   const handleDownloadPDF = () => {
     const element = postRef.current; // Get the post content
 

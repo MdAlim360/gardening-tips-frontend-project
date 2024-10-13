@@ -23,7 +23,7 @@ function ProfilePage({ params }: { params: any }) {
     posts?.data
       ?.filter((post: any) => !post.isDeleted)
       .reduce((acc: any, post: any) => acc + post.upvote.length, 0) || 0;
-
+  console.log(user?.data.picture);
   // Check if the user is verified
   const isUserVerified = user?.data?.status === "verified";
 
@@ -32,13 +32,13 @@ function ProfilePage({ params }: { params: any }) {
   }
 
   return (
-    <div className="pt-16 flex flex-col items-center max-w-6xl mx-auto bg-gray-100">
+    <div className="pt-16 flex mt-16 flex-col items-center max-w-6xl mx-auto bg-gray-100">
       {/* Cover Photo Section */}
       <div className="relative w-full">
         <Image
-          alt={user?.data?.name || "User Cover Photo"}
+          alt={user?.data.name || "User Cover Photo"}
           className="object-cover"
-          height={300}
+          height={400}
           src={user?.data?.coverPhoto || "https://via.placeholder.com/850x300"}
           width={"100%"}
         />
