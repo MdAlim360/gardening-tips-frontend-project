@@ -23,7 +23,7 @@ import { SearchIcon } from "./icons";
 function NavBar() {
   const modalRef = useRef<HTMLDivElement | null>(null);
   const user: any = useAppSelector((state) => state.auth.user);
-
+  console.log(user);
   const [activeLink, setActiveLink] = useState("home");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);

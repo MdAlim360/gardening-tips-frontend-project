@@ -105,10 +105,11 @@ const PostCard: React.FC<Post> = ({
   const [updatePost] = useUpdatePostMutation();
   const [deletePost] = useDeletePostMutation();
   const currentUser: any = useAppSelector((state) => state.auth.user);
-
+  console.log(currentUser);
   // Fetch post user
   // console.log(currentUser.id);
   const { data: postUser } = useGetSingleUserQuery(user);
+  const { data: postUser2 } = useGetSingleUserQuery(currentUser.id);
 
   useEffect(() => {
     if (postUser) {
@@ -142,7 +143,7 @@ const PostCard: React.FC<Post> = ({
   }, [createdAt]);
 
   const handleUpvote = async () => {
-    const userId = postUser?.data?._id; // Get the current user's ID
+    const userId = postUser2?.data?._id; // Get the current user's ID
 
     // Check if the user has already upvoted
     const existingUpvoteIndex = upvote.findIndex(
