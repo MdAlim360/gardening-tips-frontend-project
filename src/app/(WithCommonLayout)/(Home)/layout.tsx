@@ -1,6 +1,7 @@
+"use client";
 import LeftSidebar from "@src/components/LeftSidebar";
-import RightSidebar from "@src/components/LeftSidebar";
 import NavBar from "@src/components/navbar";
+import RightSidebar from "@src/components/RightSidebar";
 import { ReactNode } from "react";
 
 export default function Layout({ children }: { children: ReactNode }) {

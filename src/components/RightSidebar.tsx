@@ -18,7 +18,7 @@ export default function RightSidebar() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentQuoteIndex((prevIndex) =>
-        prevIndex === quotes.length - 1 ? 0 : prevIndex + 1,
+        prevIndex === quotes.length - 1 ? 0 : prevIndex + 1
       );
     }, 4000); // Change quote every 4 seconds
 
