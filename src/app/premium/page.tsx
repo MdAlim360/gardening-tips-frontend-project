@@ -1,6 +1,7 @@
 "use client";
 
-import PostCard from "@src//components/modules/post/PostCard";
+import dynamic from "next/dynamic";
+const PostCard = dynamic(() => import("@src/components/modules/post/PostCard"));
 import { useGetAllPostQuery } from "@src//redux/features/post/postManagement";
 import React from "react";
 

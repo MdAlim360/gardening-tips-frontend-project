@@ -16,6 +16,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import Cookies from "js-cookie";
 import Head from "next/head";
+import { useEffect } from "react";
 
 // Validation schema
 const schema = z.object({
@@ -68,6 +69,14 @@ export default function Login() {
       toast.success("Logged in", { id: toastId, duration: 2000 });
 
       // Redirect based on user role or to a specific URL
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      // useEffect(() => {
+      //   if (typeof window !== "undefined") {
+      //     // Perform client-side redirection
+      //     window.location.href = redirect || "/";
+      //   }
+      // }, [redirect]);
+
       window.location.href = redirect || "/";
     } catch (err: any) {
       toast.error(err?.message || "An error occurred", {

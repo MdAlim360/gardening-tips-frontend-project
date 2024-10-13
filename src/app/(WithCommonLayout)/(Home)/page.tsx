@@ -1,12 +1,12 @@
 "use client";
 
-import PostCard from "@src/components/modules/post/PostCard";
+// import PostCard from "@src/components/modules/post/PostCard";
 import { useGetAllPostQuery } from "@src/redux/features/post/postManagement";
 import { useGetSingleUserQuery } from "@src/redux/features/user/userManagement";
 import { useAppSelector } from "@src/redux/hooks";
-import { useRouter } from "next/router";
 import { useState } from "react";
-
+import dynamic from "next/dynamic";
+const PostCard = dynamic(() => import("@src/components/modules/post/PostCard"));
 // Define types for Post and User (modify according to your API response)
 // interface Post {
 //   _id: string;

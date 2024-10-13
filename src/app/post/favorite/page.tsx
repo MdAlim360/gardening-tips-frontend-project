@@ -1,8 +1,9 @@
 "use client";
 
-import PostCard from "@src//components/modules/post/PostCard";
-import { useGetAllPostQuery } from "@src//redux/features/post/postManagement";
-import { useAppSelector } from "@src//redux/hooks";
+import dynamic from "next/dynamic";
+const PostCard = dynamic(() => import("@src/components/modules/post/PostCard"));
+import { useGetAllPostQuery } from "@src/redux/features/post/postManagement";
+import { useAppSelector } from "@src/redux/hooks";
 
 function FavoritePage() {
   const currentUser: any = useAppSelector((state) => state.auth.user);
@@ -17,7 +18,7 @@ function FavoritePage() {
   }
 
   const favoritePosts = posts.data.result.filter((post) =>
-    post.favorite.includes(currentUser.id),
+    post.favorite.includes(currentUser.id)
   );
 
   console.log(favoritePosts);

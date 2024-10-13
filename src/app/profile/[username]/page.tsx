@@ -8,7 +8,8 @@ import { useGetMyPostQuery } from "@src//redux/features/post/postManagement";
 import VerifyUserModal from "@src//components/modules/verifyUserModal";
 import EditModal from "@src//components/modal";
 import PostModal from "@src//components/modules/postModal";
-import PostCard from "@src//components/modules/post/PostCard";
+import dynamic from "next/dynamic";
+const PostCard = dynamic(() => import("@src/components/modules/post/PostCard"));
 
 function ProfilePage({ params }: { params: any }) {
   const { username } = params;
