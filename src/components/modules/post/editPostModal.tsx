@@ -10,7 +10,8 @@ import {
   Input,
 } from "@nextui-org/react";
 import { useForm } from "react-hook-form";
-import ReactQuill from "react-quill";
+import dynamic from "next/dynamic";
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css"; // Import Quill styles
 import { toast } from "sonner";
 import { useUpdatePostMutation } from "@src//redux/features/post/postManagement";
@@ -33,7 +34,10 @@ export default function EditPostModal({ postId }: { postId: any }) {
   const [images, setImages] = useState<string[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
   const [isPremium, setIsPremium] = useState(false);
-
+  const stripHtml = (html: string) => {
+    const doc = new DOMParser().parseFromString(html, "text/html");
+    return doc.body.textContent || "";
+  };
   const [updatePost] = useUpdatePostMutation();
 
   const onSubmit = async (data: any) => {
@@ -94,7 +98,7 @@ export default function EditPostModal({ postId }: { postId: any }) {
                   className="mb-4 bg-white"
                   placeholder="Write your content here..."
                   theme="snow"
-                  onChange={(content) => setPostContent(content)} // Use raw content
+                  onChange={(content) => setPostContent(stripHtml(content))}
                 />
 
                 <h3 className="text-lg font-bold mb-2">Attach Images</h3>
